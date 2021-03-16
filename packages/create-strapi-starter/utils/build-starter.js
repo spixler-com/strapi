@@ -127,9 +127,11 @@ module.exports = async function buildStarter(projectArgs, program) {
 
   await installWithLogs(join(rootPath, 'frontend'));
 
+  const fullUrl = `https://github.com/${full_name}`;
   // Set command options for Strapi app
   const generateStrapiAppOptions = {
     ...program,
+    starter: fullUrl,
     template: starterJson.template,
     run: false,
   };
