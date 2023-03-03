@@ -2,16 +2,11 @@ import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import LeftMenuLink from '../../LeftMenu/LeftMenuLink';
+import SubMenus from './SubMenus';
 
 const SpixlerLeftMenuSection = ({ title, links }) => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
-  useEffect(() => {
-    if (!isOpen) {
-      setIsSubmenuOpen(false);
-    }
-  }, [isOpen]);
   if (title == 'common') {
     return (
       <div className="menu-section">
@@ -66,29 +61,7 @@ const SpixlerLeftMenuSection = ({ title, links }) => {
               </ul>
             )
           } else {
-            return (
-              <div className="submenu-section">
-                <h5 // eslint-disable-line
-                  onClick={() => setIsSubmenuOpen(!isSubmenuOpen)} style={{ display: isOpen ? 'block' : 'none' }}
-                >
-                  {isSubmenuOpen ? '\u25BE' : '\u25B8'} {language}
-                </h5>
-                <ul style={{ display: isSubmenuOpen ? 'block' : 'none' }}>
-                  {links[language].map(link => (
-                    <li key={link.destination}>
-                      <LeftMenuLink
-                        location={location}
-                        iconName={link.icon}
-                        label={link.label}
-                        destination={link.destination}
-                        notificationsCount={link.notificationsCount || 0}
-                        search={link.search}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )
+            return (<SubMenus key={title} openMenu={isOpen} title={language} links={links[language]} />)
           }
         }
 
